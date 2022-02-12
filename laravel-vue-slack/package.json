@@ -18,6 +18,7 @@
     "dependencies": {
         "@vue/compiler-sfc": "^3.2.30",
         "vue": "^3.2.29",
-        "vue-loader": "^17.0.0"
+        "vue-loader": "^17.0.0",
+        "vue-router": "^4.0.12"
     }
 }

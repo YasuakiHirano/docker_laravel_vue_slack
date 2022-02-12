@@ -1,6 +1,7 @@
 <template>
   <div>
     Hello, {{ text }}
+    <router-link to="/">サインイン画面へ</router-link>
   </div>
 </template>
 <script>

@@ -8,7 +8,7 @@
     </head>
     <body class="h-screen w-screen">
         <div id="app" class="h-screen w-screen">
-            <chat />
+            <router-view></router-view>
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
