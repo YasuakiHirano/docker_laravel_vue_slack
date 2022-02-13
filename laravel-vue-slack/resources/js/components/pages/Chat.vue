@@ -13,6 +13,20 @@
         </div>
       </show-channel-name>
       <div class="w-full overflow-y-scroll">
+        <transition-group name="list" tag="div">
+          <div v-for="(message, index) in messages" :key="message.id">
+            <chat-message
+              class="mt-5 w-full"
+              :channelId="1"
+              :messageId="message.id"
+              :date="message.date"
+              :imagePath="message.imagePath"
+              :postUserName="message.postUserName"
+              :postTime="message.postTime"
+              :content="message.content"
+            />
+          </div>
+        </transition-group>
       </div>
     </div>
   </div>
@@ -24,11 +38,37 @@ export default {
     const channelName = ref('general')
     const isChannelPublic = ref(false)
     const userCount = ref(0)
+    const messages = ref([])
+    messages.value = [{
+      'id': 1,
+      'imagePath': 'image/user_image_1.png',
+      'date': '2021年10月20日',
+      'postUserName': 'taro',
+      'postTime': '12:00',
+      'content': '1番目のメッセージです！',
+    },
+    {
+      'id': 2,
+      'imagePath': 'image/user_image_2.png',
+      'date': '',
+      'postUserName': 'jiro',
+      'postTime': '12:00',
+      'content': '2番目のメッセージです！',
+    },
+    {
+      'id': 3,
+      'imagePath': 'image/user_image_3.png',
+      'date': '2021年10月21日',
+      'postUserName': 'hanako',
+      'postTime': '12:00',
+      'content': '3番目のメッセージです！',
+    }]
 
     return {
       channelName,
       isChannelPublic,
-      userCount
+      userCount,
+      messages
     }
   }
 }

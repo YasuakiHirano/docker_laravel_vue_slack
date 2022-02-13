@@ -21,6 +21,10 @@ import ArrowBottomIcon from './components/atoms/ArrowBottomIcon.vue'
 import ArrowRightIcon from './components/atoms/ArrowRightIcon.vue'
 import UserIcon from './components/atoms/UserIcon.vue'
 import ServiceTitle from './components/atoms/ServiceTitle.vue'
+import ShowDate from './components/atoms/ShowDate.vue'
+import ChatUserImage from './components/atoms/ChatUserImage.vue'
+import ChatUserName from './components/atoms/ChatUserName.vue'
+import ChatUserDate from './components/atoms/ChatUserDate.vue'
 
 app.component('form-label', FormLabel)
 app.component('form-text', FormText)
@@ -36,6 +40,10 @@ app.component('arrow-bottom-icon', ArrowBottomIcon)
 app.component('arrow-right-icon', ArrowRightIcon)
 app.component('user-icon', UserIcon)
 app.component('service-title', ServiceTitle)
+app.component('show-date', ShowDate)
+app.component('chat-user-image', ChatUserImage)
+app.component('chat-user-name', ChatUserName)
+app.component('chat-user-date', ChatUserDate)
 
 // molecules
 import AppTitle from './components/molecules/AppTitle.vue'
@@ -53,8 +61,10 @@ app.component('user-entry-count', UserEntryCount)
 // organisms
 import SideMenu from './components/organisms/SideMenu.vue'
 import ShowChannelName  from './components/organisms/ShowChannelName.vue'
+import ChatMessage  from './components/organisms/ChatMessage.vue'
 app.component('side-menu', SideMenu)
 app.component('show-channel-name', ShowChannelName)
+app.component('chat-message', ChatMessage)
 
 // pages
 import Chat from './components/pages/Chat.vue'
