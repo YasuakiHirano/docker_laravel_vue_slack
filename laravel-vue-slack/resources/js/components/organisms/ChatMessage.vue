@@ -2,6 +2,17 @@
   <div class="border border-b-0">
     <show-date v-if="date !== ''">{{ date }}</show-date>
     <div class="group p-5 pr-0 pt-0 flex pt-1 pb-1 mt-1 relative hover:bg-gray-100">
+      <message-area-icons
+        :show="true"
+        :messageId="messageId"
+        :channelId="channelId"
+        :isMyMessage="isMyMessage"
+        :showThreadIcon="showThreadIcon"
+        @event:reactionMessage="reactionMessage"
+        @event:threadMessage="threadMessage"
+        @event:deleteMessage="deleteMessage"
+        @event:editMessage="editMessage"
+      />
       <div class="w-12">
         <chat-user-image :image="imagePath" />
       </div>
@@ -16,8 +27,53 @@
 import { ref } from 'vue'
 
 export default({
-  props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content'],
+  props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content', 'isMyMessage', 'showThreadIcon'],
   setup(props, context) {
+    const isEditMode = ref(false)
+
+    /**
+     * メッセージのリアクションボタンを押したときにemitする
+     * @param {int} messageId メッセージID
+     */
+    const reactionMessage = async (messageId) => {
+      console.log('click reactionMessage!! messageId:' + messageId)
+      context.emit('event:reactionMessage', messageId)
+    }
+
+    /**
+     * メッセージのスレッドボタンを押したときにemitする
+     * @param {int} messageId メッセージID
+     */
+    const threadMessage = async (messageId) => {
+      console.log('click threadMessage!! messageId:' + messageId)
+      context.emit('event:threadMessage', messageId)
+    }
+
+    /**
+     * メッセージの編集ボタンを押したときの処理
+     */
+    const editMessage = () => {
+      console.log('click editMessage!!')
+      isEditMode.value = true
+    }
+
+    /*
+     * メッセージの削除ボタンを押したときにemitする
+     * @param {int} messageId メッセージID
+     * @param {int} channelId チャンネルID
+     */
+    const deleteMessage = async (messageId, channelId) => {
+      console.log('click deleteMessage!! messageId:' + messageId + ' channelId:' + channelId)
+      // TODO: ここでメッセージの削除APIを実行
+    }
+
+    return {
+      isEditMode,
+      reactionMessage,
+      threadMessage,
+      deleteMessage,
+      editMessage,
+    }
   }
 });
 </script>

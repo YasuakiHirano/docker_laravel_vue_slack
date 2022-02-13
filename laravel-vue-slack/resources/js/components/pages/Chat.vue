@@ -24,6 +24,8 @@
               :postUserName="message.postUserName"
               :postTime="message.postTime"
               :content="message.content"
+              :isMyMessage="userName === message.postUserName"
+              :showThreadIcon="true"
             />
           </div>
         </transition-group>
@@ -39,6 +41,9 @@ export default {
     const isChannelPublic = ref(false)
     const userCount = ref(0)
     const messages = ref([])
+    const userName = ref('')
+    userName.value = 'taro'
+
     messages.value = [{
       'id': 1,
       'imagePath': 'image/user_image_1.png',
@@ -68,7 +73,8 @@ export default {
       channelName,
       isChannelPublic,
       userCount,
-      messages
+      messages,
+      userName
     }
   }
 }

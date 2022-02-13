@@ -25,6 +25,9 @@ import ShowDate from './components/atoms/ShowDate.vue'
 import ChatUserImage from './components/atoms/ChatUserImage.vue'
 import ChatUserName from './components/atoms/ChatUserName.vue'
 import ChatUserDate from './components/atoms/ChatUserDate.vue'
+import ThreadIcon from './components/atoms/ThreadIcon.vue'
+import EditIcon from './components/atoms/EditIcon.vue'
+import DeleteIcon from './components/atoms/DeleteIcon.vue'
 
 app.component('form-label', FormLabel)
 app.component('form-text', FormText)
@@ -44,6 +47,9 @@ app.component('show-date', ShowDate)
 app.component('chat-user-image', ChatUserImage)
 app.component('chat-user-name', ChatUserName)
 app.component('chat-user-date', ChatUserDate)
+app.component('thread-icon', ThreadIcon)
+app.component('edit-icon', EditIcon)
+app.component('delete-icon', DeleteIcon)
 
 // molecules
 import AppTitle from './components/molecules/AppTitle.vue'
@@ -51,12 +57,14 @@ import ChatHeader from './components/molecules/ChatHeader.vue'
 import AddMember from './components/molecules/AddMember.vue'
 import ChannelMenu from './components/molecules/ChannelMenu.vue'
 import UserEntryCount  from './components/molecules/UserEntryCount.vue'
+import MessageAreaIcons  from './components/molecules/MessageAreaIcons.vue'
 
 app.component('app-title', AppTitle)
 app.component('chat-header', ChatHeader)
 app.component('add-member', AddMember)
 app.component('channel-menu', ChannelMenu)
 app.component('user-entry-count', UserEntryCount)
+app.component('message-area-icons', MessageAreaIcons)
 
 // organisms
 import SideMenu from './components/organisms/SideMenu.vue'
