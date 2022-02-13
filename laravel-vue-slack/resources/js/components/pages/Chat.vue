@@ -2,11 +2,34 @@
   <div class="main">
     <chat-header class="header" userName="テストユーザー" />
     <side-menu class="side-menu" :channelId="1" />
+    <div class="message-area">
+      <show-channel-name
+        :count="userCount"
+      >
+        <div class="flex">
+          <div v-if="isChannelPublic"><hash-icon class="mt-1 w-5 h-5"></hash-icon></div>
+          <div v-else><lock-icon class="mt-1 w-5 h-5"></lock-icon></div>
+          <div class="mr-1">{{ channelName }}</div>
+        </div>
+      </show-channel-name>
+      <div class="w-full overflow-y-scroll">
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import { ref } from 'vue'
 export default {
   setup() {
+    const channelName = ref('general')
+    const isChannelPublic = ref(false)
+    const userCount = ref(0)
+
+    return {
+      channelName,
+      isChannelPublic,
+      userCount
+    }
   }
 }
 </script>

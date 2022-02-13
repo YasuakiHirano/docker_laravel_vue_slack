@@ -42,15 +42,19 @@ import AppTitle from './components/molecules/AppTitle.vue'
 import ChatHeader from './components/molecules/ChatHeader.vue'
 import AddMember from './components/molecules/AddMember.vue'
 import ChannelMenu from './components/molecules/ChannelMenu.vue'
+import UserEntryCount  from './components/molecules/UserEntryCount.vue'
 
 app.component('app-title', AppTitle)
 app.component('chat-header', ChatHeader)
 app.component('add-member', AddMember)
 app.component('channel-menu', ChannelMenu)
+app.component('user-entry-count', UserEntryCount)
 
 // organisms
 import SideMenu from './components/organisms/SideMenu.vue'
+import ShowChannelName  from './components/organisms/ShowChannelName.vue'
 app.component('side-menu', SideMenu)
+app.component('show-channel-name', ShowChannelName)
 
 // pages
 import Chat from './components/pages/Chat.vue'
