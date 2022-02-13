@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <chat-header class="header" userName="テストユーザー" />
+    <side-menu class="side-menu" :channelId="1" />
   </div>
 </template>
 <script>
