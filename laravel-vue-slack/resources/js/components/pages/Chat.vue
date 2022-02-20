@@ -30,19 +30,38 @@
           </div>
         </transition-group>
       </div>
+      <chat-input-area
+        ref="chatInputArea"
+        @event:clickMentionIcon="isShowMentionMember = true"
+        @event:clickReactionIcon="isShowEmojiPicker = true"
+        @event:deleteMentionUser="deleteMentionUser"
+        :userId="userId"
+        :channelId="selectChannel"
+        :channelName="channelName"
+        :isMention="true"
+        class="mt-2" />
     </div>
   </div>
 </template>
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 export default {
   setup() {
     const channelName = ref('general')
     const isChannelPublic = ref(false)
     const userCount = ref(0)
     const messages = ref([])
+    const chatInputArea = ref(null)
+    const selectChannel = ref(1)
+    const userId = ref(0)
+    const isShowEmojiPicker = ref(false)
+    const isShowMentionMember = ref(false)
     const userName = ref('')
     userName.value = 'taro'
+
+    onMounted(() => {
+      chatInputArea.value.mentionUserArea.mentionUsers = ['taro', 'jiro']
+    })
 
     messages.value = [{
       'id': 1,
@@ -69,12 +88,26 @@ export default {
       'content': '3番目のメッセージです！',
     }]
 
+    /**
+     * メンションの削除ボタンが押された時の処理
+     * @param {string} mentionUser メンションユーザー名
+     */
+    const deleteMentionUser = (mentionUser) => {
+      chatInputArea.value.mentionUserArea.mentionUsers = chatInputArea.value.mentionUserArea.mentionUsers.filter((user) => { return user !== mentionUser })
+    }
+
     return {
       channelName,
       isChannelPublic,
       userCount,
       messages,
-      userName
+      userName,
+      chatInputArea,
+      selectChannel,
+      userId,
+      isShowEmojiPicker,
+      isShowMentionMember,
+      deleteMentionUser,
     }
   }
 }
