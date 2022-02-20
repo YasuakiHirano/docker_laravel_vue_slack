@@ -5,6 +5,8 @@
     <div class="message-area">
       <show-channel-name
         :count="userCount"
+        @event:clickCountChannel="isChannelTab = false;showChannelDetail = true;"
+        @event:openChannelDetail="isChannelTab = true;showChannelDetail = true;"
       >
         <div class="flex">
           <div v-if="isChannelPublic"><hash-icon class="mt-1 w-5 h-5"></hash-icon></div>
@@ -48,12 +50,38 @@
       @event:modalClose="isShowMentionMember = false"
       @event:mentionUsers="selectMentionUsers"
     />
+    <!----チャンネル情報表示---->
+    <channel-detail-modal
+      :showModal="showChannelDetail"
+      :isChannelTab="isChannelTab"
+      :channelUsers="channelUsers"
+      :description="channelDescription"
+      :createUser="channelCreateUser"
+      :isChannelPublic="isChannelPublic"
+      :channelName="channelName"
+      @event:deleteChannel="deleteChannel"
+      @event:editChannelDescription="openDescriptionEditModal"
+      @event:addChannelMember="showAddChannelMember = true"
+      @event:modalAction="showChannelDetail = false" />
+    <!----チャンネル説明編集---->
+    <channel-description-edit-modal
+      ref="channelDescriptionEditModal"
+      :showModal="showEditChannelDescription"
+      @event:modalAction="updateChannelDescription"
+      @event:modalClose="showEditChannelDescription = false" />
+    <!----チャンネルメンバー追加---->
+    <channel-add-member-modal
+      ref="channelAddMemberModal"
+      :showModal="showAddChannelMember"
+      :notChannelUsers="notChannelUsers"
+      @event:addUsers="channelAddUsers"
+      @event:modalClose="showAddChannelMember = false" />
     <div
       class="absolute w-full h-full"
       @click="isShowEmojiPicker = false"
       v-show="isShowEmojiPicker">
     </div>
-    <!---絵文字入力用の絵文字ピッカー--->
+    <!----絵文字入力用の絵文字ピッカー---->
     <emoji-picker
       class="absolute bottom-20 right-4"
       @event:selectEmoji="inputEmoji"
@@ -75,6 +103,29 @@ export default {
     const isShowEmojiPicker = ref(false)
     const isShowMentionMember = ref(false)
     const mentionMemberModal = ref(null)
+    const isChannelTab = ref(true)
+    const showAddChannelMember = ref(false)
+    const showChannelDetail = ref(false)
+    const channelDescription = ref('')
+    const channelCreateUser = ref('')
+    const channelDescriptionEditModal = ref(null)
+    const showEditChannelDescription = ref(false)
+    const notChannelUsers = ref([])
+    const channelAddMemberModal = ref(null)
+    const showLoading = ref(true)
+
+    channelDescription.value = 'チャンネルの説明テスト'
+    channelCreateUser.value = 'taro'
+    notChannelUsers.value = [{
+      'id': 2,
+      'imagePath': 'image/user_image_2.png',
+      'name': 'jiro',
+    },
+    {
+      'id': 3,
+      'imagePath': 'image/user_image_3.png',
+      'name': 'hanako',
+    }]
     const channelUsers = ref([])
     channelUsers.value = [{
       'id': 1,
@@ -156,6 +207,50 @@ export default {
       isShowEmojiPicker.value = false
     }
 
+    /**
+     * チャンネル詳細モーダルからのチャンネル削除
+     */
+    const deleteChannel = async () => {
+      // チャンネルの削除
+      // TODO: チャンネルを削除するAPIを実行
+
+      showChannelDetail.value = false
+
+      // 表示するチャンネルの変更
+      // TODO: チャンネルを変更するAPIを実行
+    }
+
+    /**
+     * チャンネルの説明編集モーダルを開く
+     */
+    const openDescriptionEditModal = () => {
+      channelDescriptionEditModal.value.description = channelDescription.value
+      showEditChannelDescription.value = true
+    }
+
+    /**
+     * チャンネルの説明箇所を更新する
+     */
+    const updateChannelDescription = async () => {
+      // チャンネルの説明を更新
+      // TODO: チャンネルの説明を更新するAPIを実行
+      channelDescription.value = channelDescriptionEditModal.value.description
+      showEditChannelDescription.value = false
+    }
+
+    /**
+     * チャンネルにユーザーを追加する処理
+     * @param {array} addUsers チャンネルに追加するユーザーID配列
+     */
+    const channelAddUsers = async (addUsers) => {
+      // チャンネルにユーザーを追加する
+      // TODO: チャンネルのユーザーを追加するAPIを実行
+
+      // 選択していた追加ユーザーのクリア
+      channelAddMemberModal.value.selectUsers = []
+      showAddChannelMember.value = false
+    }
+
     return {
       channelName,
       isChannelPublic,
@@ -172,6 +267,19 @@ export default {
       selectMentionUsers,
       mentionMemberModal,
       inputEmoji,
+      isChannelTab,
+      showAddChannelMember,
+      showChannelDetail,
+      channelDescription,
+      channelCreateUser,
+      updateChannelDescription,
+      channelAddUsers,
+      channelDescriptionEditModal,
+      showEditChannelDescription,
+      notChannelUsers,
+      openDescriptionEditModal,
+      channelAddMemberModal,
+      deleteChannel,
     }
   }
 }

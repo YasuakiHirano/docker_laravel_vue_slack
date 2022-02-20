@@ -38,6 +38,8 @@ import ChatTextArea from './components/atoms/ChatTextArea.vue'
 import MentionIcon from './components/atoms/MentionIcon.vue'
 import FormActionButton from './components/atoms/FormActionButton.vue'
 import FormCancelButton from './components/atoms/FormCancelButton.vue'
+import FormDeleteButton from './components/atoms/FormDeleteButton.vue'
+import SpeakerIcon from './components/atoms/SpeakerIcon.vue'
 
 app.component('form-label', FormLabel)
 app.component('form-text', FormText)
@@ -70,6 +72,8 @@ app.component('chat-text-area', ChatTextArea)
 app.component('mention-icon', MentionIcon)
 app.component('form-action-button', FormActionButton)
 app.component('form-cancel-button', FormCancelButton)
+app.component('form-delete-button', FormDeleteButton)
+app.component('speaker-icon', SpeakerIcon)
 
 // molecules
 import AppTitle from './components/molecules/AppTitle.vue'
@@ -97,6 +101,9 @@ import ChatInputArea from './components/organisms/ChatInputArea.vue'
 import AppModal from './components/organisms/AppModal.vue'
 import MentionMemberModal from './components/organisms/MentionMemberModal.vue'
 import EmojiPicker from './components/organisms/EmojiPicker.vue'
+import ChannelDetailModal  from './components/organisms/ChannelDetailModal.vue'
+import ChannelDescriptionEditModal  from './components/organisms/ChannelDescriptionEditModal.vue'
+import ChannelAddMemberModal  from './components/organisms/ChannelAddMemberModal.vue'
 app.component('side-menu', SideMenu)
 app.component('show-channel-name', ShowChannelName)
 app.component('chat-message', ChatMessage)
@@ -105,6 +112,9 @@ app.component('chat-input-area', ChatInputArea)
 app.component('app-modal', AppModal)
 app.component('mention-member-modal', MentionMemberModal)
 app.component('emoji-picker', EmojiPicker)
+app.component('channel-detail-modal', ChannelDetailModal)
+app.component('channel-description-edit-modal', ChannelDescriptionEditModal)
+app.component('channel-add-member-modal', ChannelAddMemberModal)
 
 // pages
 import Chat from './components/pages/Chat.vue'
