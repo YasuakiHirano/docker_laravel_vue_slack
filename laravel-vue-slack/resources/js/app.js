@@ -96,6 +96,7 @@ import MentionUserArea from './components/organisms/MentionUserArea.vue'
 import ChatInputArea from './components/organisms/ChatInputArea.vue'
 import AppModal from './components/organisms/AppModal.vue'
 import MentionMemberModal from './components/organisms/MentionMemberModal.vue'
+import EmojiPicker from './components/organisms/EmojiPicker.vue'
 app.component('side-menu', SideMenu)
 app.component('show-channel-name', ShowChannelName)
 app.component('chat-message', ChatMessage)
@@ -103,6 +104,7 @@ app.component('mention-user-area', MentionUserArea)
 app.component('chat-input-area', ChatInputArea)
 app.component('app-modal', AppModal)
 app.component('mention-member-modal', MentionMemberModal)
+app.component('emoji-picker', EmojiPicker)
 
 // pages
 import Chat from './components/pages/Chat.vue'

@@ -48,6 +48,17 @@
       @event:modalClose="isShowMentionMember = false"
       @event:mentionUsers="selectMentionUsers"
     />
+    <div
+      class="absolute w-full h-full"
+      @click="isShowEmojiPicker = false"
+      v-show="isShowEmojiPicker">
+    </div>
+    <!---絵文字入力用の絵文字ピッカー--->
+    <emoji-picker
+      class="absolute bottom-20 right-4"
+      @event:selectEmoji="inputEmoji"
+      :isShow="isShowEmojiPicker"
+    />
   </div>
 </template>
 <script>
@@ -131,6 +142,20 @@ export default {
       isShowMentionMember.value = false
     }
 
+    /**
+     * テキストエリアの絵文字ピッカーで絵文字の選択時処理
+     * @param {object} emoji 絵文字オブジェクト
+     */
+    const inputEmoji = (emoji) => {
+      if (chatInputArea.value.chatTextArea.text === undefined || chatInputArea.value.chatTextArea.text === null) {
+        chatInputArea.value.chatTextArea.text = ''
+      }
+
+      chatInputArea.value.chatTextArea.text += emoji.native
+      chatInputArea.value.isDisableSendMessage()
+      isShowEmojiPicker.value = false
+    }
+
     return {
       channelName,
       isChannelPublic,
@@ -146,6 +171,7 @@ export default {
       channelUsers,
       selectMentionUsers,
       mentionMemberModal,
+      inputEmoji,
     }
   }
 }
