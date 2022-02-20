@@ -35,6 +35,9 @@ import MentionBorderIcon from './components/atoms/MentionBorderIcon.vue'
 import ReactionBorderIcon from './components/atoms/ReactionBorderIcon.vue'
 import SendMessageBorderIcon from './components/atoms/SendMessageBorderIcon.vue'
 import ChatTextArea from './components/atoms/ChatTextArea.vue'
+import MentionIcon from './components/atoms/MentionIcon.vue'
+import FormActionButton from './components/atoms/FormActionButton.vue'
+import FormCancelButton from './components/atoms/FormCancelButton.vue'
 
 app.component('form-label', FormLabel)
 app.component('form-text', FormText)
@@ -64,6 +67,9 @@ app.component('mention-border-icon', MentionBorderIcon)
 app.component('reaction-border-icon', ReactionBorderIcon)
 app.component('send-message-border-icon', SendMessageBorderIcon)
 app.component('chat-text-area', ChatTextArea)
+app.component('mention-icon', MentionIcon)
+app.component('form-action-button', FormActionButton)
+app.component('form-cancel-button', FormCancelButton)
 
 // molecules
 import AppTitle from './components/molecules/AppTitle.vue'
@@ -88,11 +94,15 @@ import ShowChannelName  from './components/organisms/ShowChannelName.vue'
 import ChatMessage  from './components/organisms/ChatMessage.vue'
 import MentionUserArea from './components/organisms/MentionUserArea.vue'
 import ChatInputArea from './components/organisms/ChatInputArea.vue'
+import AppModal from './components/organisms/AppModal.vue'
+import MentionMemberModal from './components/organisms/MentionMemberModal.vue'
 app.component('side-menu', SideMenu)
 app.component('show-channel-name', ShowChannelName)
 app.component('chat-message', ChatMessage)
 app.component('mention-user-area', MentionUserArea)
 app.component('chat-input-area', ChatInputArea)
+app.component('app-modal', AppModal)
+app.component('mention-member-modal', MentionMemberModal)
 
 // pages
 import Chat from './components/pages/Chat.vue'

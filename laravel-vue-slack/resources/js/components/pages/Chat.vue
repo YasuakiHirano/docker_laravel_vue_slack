@@ -41,6 +41,13 @@
         :isMention="true"
         class="mt-2" />
     </div>
+    <mention-member-modal
+      ref="mentionMemberModal"
+      :showModal="isShowMentionMember"
+      :channelUsers="channelUsers"
+      @event:modalClose="isShowMentionMember = false"
+      @event:mentionUsers="selectMentionUsers"
+    />
   </div>
 </template>
 <script>
@@ -56,11 +63,29 @@ export default {
     const userId = ref(0)
     const isShowEmojiPicker = ref(false)
     const isShowMentionMember = ref(false)
+    const mentionMemberModal = ref(null)
+    const channelUsers = ref([])
+    channelUsers.value = [{
+      'id': 1,
+      'imagePath': 'image/user_image_1.png',
+      'name': 'taro',
+    },
+    {
+      'id': 2,
+      'imagePath': 'image/user_image_2.png',
+      'name': 'jiro',
+    },
+    {
+      'id': 3,
+      'imagePath': 'image/user_image_3.png',
+      'name': 'hanako',
+    }]
+
     const userName = ref('')
     userName.value = 'taro'
 
     onMounted(() => {
-      chatInputArea.value.mentionUserArea.mentionUsers = ['taro', 'jiro']
+      // chatInputArea.value.mentionUserArea.mentionUsers = ['taro', 'jiro']
     })
 
     messages.value = [{
@@ -94,6 +119,16 @@ export default {
      */
     const deleteMentionUser = (mentionUser) => {
       chatInputArea.value.mentionUserArea.mentionUsers = chatInputArea.value.mentionUserArea.mentionUsers.filter((user) => { return user !== mentionUser })
+      mentionMemberModal.value.selectUsers = mentionMemberModal.value.selectUsers.filter((user) => { return user !== mentionUser })
+    }
+
+    /**
+     * メンションするユーザーを選択された時の処理
+     * @param {array} mentionUsers
+     */
+    const selectMentionUsers = (mentionUsers) => {
+      chatInputArea.value.mentionUserArea.mentionUsers = mentionUsers
+      isShowMentionMember.value = false
     }
 
     return {
@@ -108,6 +143,9 @@ export default {
       isShowEmojiPicker,
       isShowMentionMember,
       deleteMentionUser,
+      channelUsers,
+      selectMentionUsers,
+      mentionMemberModal,
     }
   }
 }
