@@ -1,7 +1,11 @@
 <template>
   <div class="main">
     <chat-header class="header" userName="テストユーザー" />
-    <side-menu class="side-menu" :channelId="1" />
+    <side-menu
+      class="side-menu"
+      :channelId="1"
+      @event:addMember="showAddMember = true"
+    />
     <div class="message-area">
       <show-channel-name
         :count="userCount"
@@ -87,6 +91,16 @@
       @event:selectEmoji="inputEmoji"
       :isShow="isShowEmojiPicker"
     />
+    <!----メンバー招待---->
+    <add-member-modal
+      ref="addMemberModal"
+      :showModal="showAddMember"
+      @event:modalAction="sendInvitationMail"
+      @event:modalClose="showAddMember = false"
+      @event:updateText="updateEmail" />
+    <add-member-success-modal
+      :showModal="showAddMemberSuccess"
+      @event:modalAction="showAddMemberSuccess = false" />
   </div>
 </template>
 <script>
@@ -113,6 +127,10 @@ export default {
     const notChannelUsers = ref([])
     const channelAddMemberModal = ref(null)
     const showLoading = ref(true)
+    const email = ref('')
+    const addMemberModal = ref(null)
+    const showAddMember = ref(false)
+    const showAddMemberSuccess = ref(false)
 
     channelDescription.value = 'チャンネルの説明テスト'
     channelCreateUser.value = 'taro'
@@ -251,6 +269,28 @@ export default {
       showAddChannelMember.value = false
     }
 
+    /**
+     * メンバー招待モーダルで入力されたテキストをemail変数に反映する
+     * @param {string} text
+     */
+    const updateEmail = (text) => {
+      email.value = text.value
+    }
+
+    /**
+     * メンバー招待モーダルからのメール送信処理
+     */
+    const sendInvitationMail = async () => {
+      showAddMember.value = false
+
+      // 招待メールの送信
+      // TODO:APIを使用してメールを送信する
+
+      // 入力値のクリア
+      addMemberModal.value.emailAddress.text = ''
+      showAddMemberSuccess.value = true
+    }
+
     return {
       channelName,
       isChannelPublic,
@@ -280,6 +320,12 @@ export default {
       openDescriptionEditModal,
       channelAddMemberModal,
       deleteChannel,
+      email,
+      addMemberModal,
+      showAddMember,
+      showAddMemberSuccess,
+      updateEmail,
+      sendInvitationMail,
     }
   }
 }

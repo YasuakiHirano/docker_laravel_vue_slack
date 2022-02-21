@@ -104,6 +104,9 @@ import EmojiPicker from './components/organisms/EmojiPicker.vue'
 import ChannelDetailModal  from './components/organisms/ChannelDetailModal.vue'
 import ChannelDescriptionEditModal  from './components/organisms/ChannelDescriptionEditModal.vue'
 import ChannelAddMemberModal  from './components/organisms/ChannelAddMemberModal.vue'
+import AddMemberModal  from './components/organisms/AddMemberModal.vue'
+import AddMemberSuccessModal  from './components/organisms/AddMemberSuccessModal.vue'
+
 app.component('side-menu', SideMenu)
 app.component('show-channel-name', ShowChannelName)
 app.component('chat-message', ChatMessage)
@@ -115,6 +118,8 @@ app.component('emoji-picker', EmojiPicker)
 app.component('channel-detail-modal', ChannelDetailModal)
 app.component('channel-description-edit-modal', ChannelDescriptionEditModal)
 app.component('channel-add-member-modal', ChannelAddMemberModal)
+app.component('add-member-modal', AddMemberModal)
+app.component('add-member-success-modal', AddMemberSuccessModal)
 
 // pages
 import Chat from './components/pages/Chat.vue'
