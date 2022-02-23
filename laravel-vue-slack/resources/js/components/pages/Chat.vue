@@ -34,9 +34,11 @@
               :isMyMessage="userName === message.postUserName"
               :showThreadIcon="true"
               :isThreadCount="message.isThreadCount"
+              :reactions="message.reactions"
+              @event:reactionMessage="reactionMessage"
               @event:threadMessage="threadMessage"
               @event:updateAreaReaction="updateAreaReaction(index)"
-            />
+              />            
           </div>
         </transition-group>
       </div>
@@ -223,6 +225,7 @@ export default {
       'postTime': '12:00',
       'content': '1番目のメッセージです！',
       'isThreadCount': 3,
+      'reactions':[],
     },
     {
       'id': 2,
@@ -232,6 +235,7 @@ export default {
       'postTime': '12:00',
       'content': '2番目のメッセージです！',
       'isThreadCount': 1,
+      'reactions':[],
     },
     {
       'id': 3,
@@ -240,6 +244,7 @@ export default {
       'postUserName': 'hanako',
       'postTime': '12:00',
       'content': '3番目のメッセージです！',
+      'reactions':[],
     },
     {
       'id': 4,
@@ -248,6 +253,7 @@ export default {
       'postUserName': 'taro',
       'postTime': '12:00',
       'content': '4番目のメッセージです！',
+      'reactions':[],
     }]
 
     /**
@@ -413,7 +419,8 @@ export default {
 
       if (messageId == 1) {
         threadModal.value.threadMessages = [{
-          'id': 1,
+          'id': 5,
+          'reactions': [],
           'imagePath': 'image/user_image_4.png',
           'date': '2021年10月20日',
           'postUserName': 'saburo',
@@ -421,7 +428,8 @@ export default {
           'content': '1番目のスレッドメッセージです！',
           },
           {
-          'id': 2,
+          'id': 6,
+          'reactions': [],
           'imagePath': 'image/user_image_5.png',
           'date': '',
           'postUserName': 'hanako',
@@ -429,7 +437,8 @@ export default {
           'content': '2番目のスレッドメッセージです！',
           },
           {
-          'id': 3,
+          'id': 7,
+          'reactions': [],
           'imagePath': 'image/user_image_6.png',
           'date': '',
           'postUserName': 'jiro',
@@ -438,7 +447,8 @@ export default {
         }]
       } else if(messageId == 2) {
         threadModal.value.threadMessages = [{
-          'id': 1,
+          'id': 8,
+          'reactions': [],
           'imagePath': 'image/user_image_1.png',
           'date': '2021年10月20日',
           'postUserName': 'taro',
@@ -464,6 +474,7 @@ export default {
       } else {
         // メッセージに対してのリアクションの場合は追加または更新する
         // TODO:APIでリアクションを作成する処理
+        reactionUpdate({id: 1, message_id: selectMessageId.value, number: 1, icon: emoji.native})
         isShowCenterEmojiPicker.value = false
       }
     }
@@ -485,6 +496,25 @@ export default {
       if (el) {
         chatMessageItems.value.push(el)
       }
+    }
+
+    /**
+     * リアクションの更新処理
+     * @param {object} reaction リアクション
+     */
+    const reactionUpdate = (reaction) => {
+      // TODO: ブロードキャスト使用時に修正予定
+      messages.value.filter(function (message) {
+        if (message.id == reaction.message_id) {
+          message.reactions.push(reaction)
+        }
+      })
+
+      threadModal.value.threadMessages.filter(function (message) {
+        if (message.id == reaction.message_id) {
+          message.reactions.push(reaction)
+        }
+      })
     }
 
     return {

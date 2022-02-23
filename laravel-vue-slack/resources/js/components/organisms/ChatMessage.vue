@@ -30,6 +30,11 @@
           @event:updateMessage="updateMessage"
           @event:clickReactionIcon="$emit('event:updateAreaReaction')"
           :isCancel="true" />
+        <div class="flex flex-wrap w-full mt-1">
+          <div v-for="reaction in reactions" :key="reaction.id" class="mt-1">
+            <reaction-circle :number="reaction.number" :icon="reaction.icon" class="mr-1 cursor-pointer" @click="updateReaction(reaction)" />
+          </div>
+        </div>
         <div v-show="isThreadCount" class="text-sm mt-2 mb-2 text-blue-500 cursor-pointer">
           <div @click="threadMessage(messageId)">{{ isThreadCount }}件の返信</div>
         </div>
@@ -41,7 +46,7 @@
 import { ref } from 'vue'
 
 export default({
-  props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content', 'isMyMessage', 'showThreadIcon', 'isThreadCount', 'messageOnly'],
+  props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content', 'isMyMessage', 'showThreadIcon', 'isThreadCount', 'messageOnly', 'reactions'],
   setup(props, context) {
     const isEditMode = ref(false)
     const chatInputArea = ref(null)
@@ -82,7 +87,7 @@ export default({
       // TODO: ここでメッセージの削除APIを実行
     }
 
-   /**
+    /**
      * メッセージの編集後に更新する処理
      * @param {int} messageId メッセージID
      * @param {string} content 編集内容
@@ -90,6 +95,15 @@ export default({
     const updateMessage = async (messageId, content) => {
       // TODO: ここでメッセージを更新するAPIを実行する
       isEditMode.value = false
+    }
+
+    /**
+     * メッセージのリアクションがクリックされたとき
+     * @param {int} reactionId リアクションID
+     */
+    const updateReaction = async (reaction) => {
+      //TODO: ここでリアクションのカウントアップをするAPIを実行する
+      reaction.number++;
     }
 
     return {
@@ -100,6 +114,7 @@ export default({
       editMessage,
       chatInputArea,
       updateMessage,
+      updateReaction,
     }
   }
 });
