@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <loading-display :isShow="showLoading" />
     <chat-header class="header" userName="テストユーザー" />
     <side-menu
       class="side-menu"
@@ -162,7 +163,7 @@ export default {
     const showEditChannelDescription = ref(false)
     const notChannelUsers = ref([])
     const channelAddMemberModal = ref(null)
-    const showLoading = ref(true)
+    const showLoading = ref(false)
     const email = ref('')
     const addMemberModal = ref(null)
     const showAddMember = ref(false)
@@ -216,6 +217,10 @@ export default {
     })
 
     onMounted(() => {
+      showLoading.value = true;
+      setTimeout(() => {
+        showLoading.value = false;
+      }, 3000);
     })
 
     messages.value = [{
@@ -571,7 +576,8 @@ export default {
       selectMessageId,
       reactionEmoji,
       updateAreaReaction,
-      chatMessages
+      chatMessages,
+      showLoading,
     }
   }
 }

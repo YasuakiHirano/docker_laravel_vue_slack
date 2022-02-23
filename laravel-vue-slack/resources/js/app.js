@@ -43,6 +43,7 @@ import SpeakerIcon from './components/atoms/SpeakerIcon.vue'
 import FormCheckbox from './components/atoms/FormCheckbox.vue'
 import ReactionIcon from './components/atoms/ReactionIcon.vue'
 import ReactionNumber from './components/atoms/ReactionNumber.vue'
+import Loading from './components/atoms/Loading.vue'
 
 app.component('form-label', FormLabel)
 app.component('form-text', FormText)
@@ -80,6 +81,7 @@ app.component('speaker-icon', SpeakerIcon)
 app.component('form-checkbox', FormCheckbox)
 app.component('reaction-icon', ReactionIcon)
 app.component('reaction-number', ReactionNumber)
+app.component('loading', Loading)
 
 // molecules
 import AppTitle from './components/molecules/AppTitle.vue'
@@ -90,6 +92,7 @@ import UserEntryCount  from './components/molecules/UserEntryCount.vue'
 import MessageAreaIcons  from './components/molecules/MessageAreaIcons.vue'
 import TextAreaIcons  from './components/molecules/TextAreaIcons.vue'
 import ReactionCircle from './components/molecules/ReactionCircle.vue'
+import LoadingDisplay from './components/molecules/LoadingDisplay.vue'
 
 app.component('app-title', AppTitle)
 app.component('chat-header', ChatHeader)
@@ -99,6 +102,7 @@ app.component('user-entry-count', UserEntryCount)
 app.component('message-area-icons', MessageAreaIcons)
 app.component('text-area-icons', TextAreaIcons)
 app.component('reaction-circle', ReactionCircle)
+app.component('loading-display', LoadingDisplay)
 
 // organisms
 import SideMenu from './components/organisms/SideMenu.vue'
