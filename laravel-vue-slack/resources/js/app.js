@@ -110,6 +110,7 @@ import AddMemberModal  from './components/organisms/AddMemberModal.vue'
 import AddMemberSuccessModal  from './components/organisms/AddMemberSuccessModal.vue'
 import AddChannelModal  from './components/organisms/AddChannelModal.vue'
 import AddChannelSuccessModal  from './components/organisms/AddChannelSuccessModal.vue'
+import ThreadModal  from './components/organisms/ThreadModal.vue'
 
 app.component('side-menu', SideMenu)
 app.component('show-channel-name', ShowChannelName)
@@ -126,6 +127,7 @@ app.component('add-member-modal', AddMemberModal)
 app.component('add-member-success-modal', AddMemberSuccessModal)
 app.component('add-channel-modal', AddChannelModal)
 app.component('add-channel-success-modal', AddChannelSuccessModal)
+app.component('thread-modal', ThreadModal)
 
 // pages
 import Chat from './components/pages/Chat.vue'

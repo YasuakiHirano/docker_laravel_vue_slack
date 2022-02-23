@@ -1,9 +1,9 @@
 <template>
-  <div class="border border-b-0">
+  <div :class="{'': messageOnly, 'border border-b-0' : !messageOnly }">
     <show-date v-if="date !== ''">{{ date }}</show-date>
-    <div class="group p-5 pr-0 pt-0 flex pt-1 pb-1 mt-1 relative hover:bg-gray-100">
+    <div :class="['group', 'p-5', 'pr-0', 'pt-0', 'flex', 'pt-1', 'pb-1', 'mt-1', 'relative', {'hover:bg-gray-100': !messageOnly}]">
       <message-area-icons
-        :show="true"
+        :show="!messageOnly"
         :messageId="messageId"
         :channelId="channelId"
         :isMyMessage="isMyMessage"
@@ -19,6 +19,9 @@
       <div class="ml-2 w-full">
         <div><chat-user-name>{{ postUserName }}</chat-user-name><chat-user-date>{{ postTime }}</chat-user-date></div>
         <div class="whitespace-pre-wrap break-all">{{ content }}</div>
+        <div v-show="isThreadCount" class="text-sm mt-2 mb-2 text-blue-500 cursor-pointer">
+          <div @click="threadMessage(messageId)">{{ isThreadCount }}件の返信</div>
+        </div>
       </div>
     </div>
   </div>
@@ -27,7 +30,7 @@
 import { ref } from 'vue'
 
 export default({
-  props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content', 'isMyMessage', 'showThreadIcon'],
+  props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content', 'isMyMessage', 'showThreadIcon', 'isThreadCount', 'messageOnly'],
   setup(props, context) {
     const isEditMode = ref(false)
 

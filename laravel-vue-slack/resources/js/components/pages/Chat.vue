@@ -33,6 +33,8 @@
               :content="message.content"
               :isMyMessage="userName === message.postUserName"
               :showThreadIcon="true"
+              :isThreadCount="message.isThreadCount"
+              @event:threadMessage="threadMessage"
             />
           </div>
         </transition-group>
@@ -114,6 +116,23 @@
     <add-channel-success-modal
       :showModal="showAddChannelSuccess"
       @event:modalAction="showAddChannelSuccess = false" />
+    <!----リアクション用の絵文字ピッカー---->
+    <emoji-picker
+      class="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center"
+      @event:selectEmoji="reactionEmoji"
+      :isShow="isShowCenterEmojiPicker" />
+    <!----スレッド---->
+    <thread-modal
+      ref="threadModal"
+      :showModal="isShowThread"
+      :message="threadMessageParam"
+      :channelId="selectChannel"
+      :channelUsers="channelUsers"
+      :userId="userId"
+      :userName="userName"
+      @event:reactionMessage="reactionMessage"
+      @event:modalClose="isShowThread = false"
+    />
   </div>
 </template>
 <script>
@@ -147,6 +166,12 @@ export default {
     const addChannelModal = ref(null)
     const showAddChannel = ref(false)
     const showAddChannelSuccess = ref(false)
+    const threadModal = ref(null)
+    const isShowThread = ref(false)
+    const threadMessageParam = ref([])
+    const isShowCenterEmojiPicker = ref(false)
+    const selectMessageId = ref(0)
+    let isUpdateEditReaction = false
 
     channelDescription.value = 'チャンネルの説明テスト'
     channelCreateUser.value = 'taro'
@@ -191,6 +216,7 @@ export default {
       'postUserName': 'taro',
       'postTime': '12:00',
       'content': '1番目のメッセージです！',
+      'isThreadCount': 3,
     },
     {
       'id': 2,
@@ -199,6 +225,7 @@ export default {
       'postUserName': 'jiro',
       'postTime': '12:00',
       'content': '2番目のメッセージです！',
+      'isThreadCount': 1,
     },
     {
       'id': 3,
@@ -348,6 +375,85 @@ export default {
       addChannelIsPrivate.value = value
     }
 
+    /**
+     * リアクションボタンを押された時の処理
+     * @param {int} messageId リアクションをつけるメッセージID
+     */
+    const reactionMessage = (messageId) => {
+      isShowCenterEmojiPicker.value = true
+      selectMessageId.value = messageId
+    }
+
+    /**
+     * スレッドボタンを押された時の処理
+     * @param {int} messageId スレッドを開くメッセージID
+     */
+    const threadMessage = async (messageId) => {
+      const message = messages.value.filter(function (message) { return message.id == messageId } )
+      threadMessageParam.value = message[0]
+      isShowThread.value = true
+
+      // TODO: スレッドのメッセージをAPIで取得して渡す
+      // threadModal.value.threadMessages
+      threadModal.value.threadMessages = []
+
+      if (messageId == 1) {
+        threadModal.value.threadMessages = [{
+          'id': 1,
+          'imagePath': 'image/user_image_4.png',
+          'date': '2021年10月20日',
+          'postUserName': 'saburo',
+          'postTime': '12:00',
+          'content': '1番目のスレッドメッセージです！',
+          },
+          {
+          'id': 2,
+          'imagePath': 'image/user_image_5.png',
+          'date': '',
+          'postUserName': 'hanako',
+          'postTime': '12:00',
+          'content': '2番目のスレッドメッセージです！',
+          },
+          {
+          'id': 3,
+          'imagePath': 'image/user_image_6.png',
+          'date': '',
+          'postUserName': 'jiro',
+          'postTime': '12:00',
+          'content': '3番目のスレッドメッセージです！',
+        }]
+      } else if(messageId == 2) {
+        threadModal.value.threadMessages = [{
+          'id': 1,
+          'imagePath': 'image/user_image_1.png',
+          'date': '2021年10月20日',
+          'postUserName': 'taro',
+          'postTime': '12:00',
+          'content': 'スレッドのメッセージです！',
+          }]
+      }
+
+      threadModal.value.parentMessageId = message[0].id
+    }
+
+    /**
+     * リアクション用絵文字ピッカーで絵文字が選択された時
+     */
+    const reactionEmoji = async (emoji) => {
+      if (isUpdateEditReaction) {
+        // メッセージ編集の場合は編集モードのテキストエリアに表示
+        chatMessageItems.value[selectChatMessageKey].querySelector("textarea").value += emoji.native
+        chatMessageItems.value[selectChatMessageKey].querySelector("textarea").dispatchEvent(new Event('input'))
+
+        isUpdateEditReaction = false
+        isShowCenterEmojiPicker.value = false
+      } else {
+        // メッセージに対してのリアクションの場合は追加または更新する
+        // TODO:APIでリアクションを作成する処理
+        isShowCenterEmojiPicker.value = false
+      }
+    }
+
     return {
       channelName,
       isChannelPublic,
@@ -390,6 +496,14 @@ export default {
       updateAddChannelName,
       updateAddChannelDescription,
       updateAddChannelIsPrivate,
+      threadModal,
+      isShowThread,
+      threadMessageParam,
+      reactionMessage,
+      threadMessage,
+      isShowCenterEmojiPicker,
+      selectMessageId,
+      reactionEmoji,
     }
   }
 }
