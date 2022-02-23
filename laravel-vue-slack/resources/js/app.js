@@ -40,6 +40,7 @@ import FormActionButton from './components/atoms/FormActionButton.vue'
 import FormCancelButton from './components/atoms/FormCancelButton.vue'
 import FormDeleteButton from './components/atoms/FormDeleteButton.vue'
 import SpeakerIcon from './components/atoms/SpeakerIcon.vue'
+import FormCheckbox from './components/atoms/FormCheckbox.vue'
 
 app.component('form-label', FormLabel)
 app.component('form-text', FormText)
@@ -74,6 +75,7 @@ app.component('form-action-button', FormActionButton)
 app.component('form-cancel-button', FormCancelButton)
 app.component('form-delete-button', FormDeleteButton)
 app.component('speaker-icon', SpeakerIcon)
+app.component('form-checkbox', FormCheckbox)
 
 // molecules
 import AppTitle from './components/molecules/AppTitle.vue'
@@ -106,6 +108,8 @@ import ChannelDescriptionEditModal  from './components/organisms/ChannelDescript
 import ChannelAddMemberModal  from './components/organisms/ChannelAddMemberModal.vue'
 import AddMemberModal  from './components/organisms/AddMemberModal.vue'
 import AddMemberSuccessModal  from './components/organisms/AddMemberSuccessModal.vue'
+import AddChannelModal  from './components/organisms/AddChannelModal.vue'
+import AddChannelSuccessModal  from './components/organisms/AddChannelSuccessModal.vue'
 
 app.component('side-menu', SideMenu)
 app.component('show-channel-name', ShowChannelName)
@@ -120,6 +124,8 @@ app.component('channel-description-edit-modal', ChannelDescriptionEditModal)
 app.component('channel-add-member-modal', ChannelAddMemberModal)
 app.component('add-member-modal', AddMemberModal)
 app.component('add-member-success-modal', AddMemberSuccessModal)
+app.component('add-channel-modal', AddChannelModal)
+app.component('add-channel-success-modal', AddChannelSuccessModal)
 
 // pages
 import Chat from './components/pages/Chat.vue'

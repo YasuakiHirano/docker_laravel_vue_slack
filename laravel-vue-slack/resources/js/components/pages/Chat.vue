@@ -5,6 +5,7 @@
       class="side-menu"
       :channelId="1"
       @event:addMember="showAddMember = true"
+      @event:addChannel="showAddChannel = true"
     />
     <div class="message-area">
       <show-channel-name
@@ -101,6 +102,18 @@
     <add-member-success-modal
       :showModal="showAddMemberSuccess"
       @event:modalAction="showAddMemberSuccess = false" />
+    <!----チャンネル追加---->
+    <add-channel-modal
+      ref="addChannelModal"
+      :showModal="showAddChannel"
+      @event:modalClose="showAddChannel = false"
+      @event:modalAction="addChannel"
+      @event:updateAddChannelName="updateAddChannelName"
+      @event:updateAddChannelDescription="updateAddChannelDescription"
+      @event:updateAddChannelIsPrivate="updateAddChannelIsPrivate" />
+    <add-channel-success-modal
+      :showModal="showAddChannelSuccess"
+      @event:modalAction="showAddChannelSuccess = false" />
   </div>
 </template>
 <script>
@@ -131,6 +144,9 @@ export default {
     const addMemberModal = ref(null)
     const showAddMember = ref(false)
     const showAddMemberSuccess = ref(false)
+    const addChannelModal = ref(null)
+    const showAddChannel = ref(false)
+    const showAddChannelSuccess = ref(false)
 
     channelDescription.value = 'チャンネルの説明テスト'
     channelCreateUser.value = 'taro'
@@ -291,6 +307,47 @@ export default {
       showAddMemberSuccess.value = true
     }
 
+    /**
+     * チャンネル追加モーダルからのチャンネル作成処理
+     */
+    const addChannel = async () => {
+      showAddChannel.value = false
+
+      // チャンネルを作成する
+      // TODO: チャンネルを作成するAPIを実行する
+
+      // 入力した内容のクリア
+      addChannelModal.value.channelName.text = ''
+      addChannelModal.value.channelDescription.text = ''
+      addChannelModal.value.channelIsPrivate.check = ''
+
+      showAddChannelSuccess.value = true
+    }
+
+    /**
+     * チャンネル追加モーダルの名前を変数に反映する
+     * @param {string} text
+     */
+    const updateAddChannelName = (text) => {
+      addChannelName.value = text.value
+    }
+
+    /**
+     * チャンネル追加モーダルの説明を変数に反映する
+     * @param {string} text
+     */
+    const updateAddChannelDescription = (text) => {
+      addChannelDescription.value = text.value
+    }
+
+    /**
+     * チャンネル追加モーダルのプライベート設定を変数に反映する
+     * @param {boolean} text
+     */
+    const updateAddChannelIsPrivate = (value) => {
+      addChannelIsPrivate.value = value
+    }
+
     return {
       channelName,
       isChannelPublic,
@@ -326,6 +383,13 @@ export default {
       showAddMemberSuccess,
       updateEmail,
       sendInvitationMail,
+      addChannelModal,
+      showAddChannel,
+      showAddChannelSuccess,
+      addChannel,
+      updateAddChannelName,
+      updateAddChannelDescription,
+      updateAddChannelIsPrivate,
     }
   }
 }
