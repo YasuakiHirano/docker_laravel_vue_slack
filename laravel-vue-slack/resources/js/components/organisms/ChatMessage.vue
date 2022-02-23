@@ -18,7 +18,18 @@
       </div>
       <div class="ml-2 w-full">
         <div><chat-user-name>{{ postUserName }}</chat-user-name><chat-user-date>{{ postTime }}</chat-user-date></div>
-        <div class="whitespace-pre-wrap break-all">{{ content }}</div>
+        <div class="whitespace-pre-wrap break-all" v-show="!isEditMode">{{ content }}</div>
+        <chat-input-area
+          ref="chatInputArea"
+          v-show="isEditMode"
+          :messageId="messageId"
+          :content="content"
+          :isUpdate="true"
+          :isMention="false"
+          @event:clickCancelIcon="isEditMode = false"
+          @event:updateMessage="updateMessage"
+          @event:clickReactionIcon="$emit('event:updateAreaReaction')"
+          :isCancel="true" />
         <div v-show="isThreadCount" class="text-sm mt-2 mb-2 text-blue-500 cursor-pointer">
           <div @click="threadMessage(messageId)">{{ isThreadCount }}件の返信</div>
         </div>
@@ -33,6 +44,7 @@ export default({
   props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content', 'isMyMessage', 'showThreadIcon', 'isThreadCount', 'messageOnly'],
   setup(props, context) {
     const isEditMode = ref(false)
+    const chatInputArea = ref(null)
 
     /**
      * メッセージのリアクションボタンを押したときにemitする
@@ -70,12 +82,24 @@ export default({
       // TODO: ここでメッセージの削除APIを実行
     }
 
+   /**
+     * メッセージの編集後に更新する処理
+     * @param {int} messageId メッセージID
+     * @param {string} content 編集内容
+     */
+    const updateMessage = async (messageId, content) => {
+      // TODO: ここでメッセージを更新するAPIを実行する
+      isEditMode.value = false
+    }
+
     return {
       isEditMode,
       reactionMessage,
       threadMessage,
       deleteMessage,
       editMessage,
+      chatInputArea,
+      updateMessage,
     }
   }
 });

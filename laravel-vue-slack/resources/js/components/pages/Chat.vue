@@ -21,7 +21,7 @@
       </show-channel-name>
       <div class="w-full overflow-y-scroll">
         <transition-group name="list" tag="div">
-          <div v-for="(message, index) in messages" :key="message.id">
+          <div v-for="(message, index) in messages" :key="message.id" :ref="chatMessages">
             <chat-message
               class="mt-5 w-full"
               :channelId="1"
@@ -35,6 +35,7 @@
               :showThreadIcon="true"
               :isThreadCount="message.isThreadCount"
               @event:threadMessage="threadMessage"
+              @event:updateAreaReaction="updateAreaReaction(index)"
             />
           </div>
         </transition-group>
@@ -136,7 +137,7 @@
   </div>
 </template>
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUpdate } from 'vue'
 export default {
   setup() {
     const channelName = ref('general')
@@ -172,6 +173,8 @@ export default {
     const isShowCenterEmojiPicker = ref(false)
     const selectMessageId = ref(0)
     let isUpdateEditReaction = false
+    let selectChatMessageKey = 0
+    const chatMessageItems = ref([])
 
     channelDescription.value = 'チャンネルの説明テスト'
     channelCreateUser.value = 'taro'
@@ -205,8 +208,11 @@ export default {
     const userName = ref('')
     userName.value = 'taro'
 
+    onBeforeUpdate(() => {
+      chatMessageItems.value = []
+    })
+
     onMounted(() => {
-      // chatInputArea.value.mentionUserArea.mentionUsers = ['taro', 'jiro']
     })
 
     messages.value = [{
@@ -234,6 +240,14 @@ export default {
       'postUserName': 'hanako',
       'postTime': '12:00',
       'content': '3番目のメッセージです！',
+    },
+    {
+      'id': 4,
+      'imagePath': 'image/user_image_1.png',
+      'date': '2021年11月16日',
+      'postUserName': 'taro',
+      'postTime': '12:00',
+      'content': '4番目のメッセージです！',
     }]
 
     /**
@@ -454,6 +468,25 @@ export default {
       }
     }
 
+    /**
+     * メッセージ一覧のメッセージ編集でリアクションがクリックされた時
+     */
+    const updateAreaReaction = (index) => {
+      selectChatMessageKey = index
+      isUpdateEditReaction = true
+      isShowCenterEmojiPicker.value = true
+    }
+
+    /**
+     * メッセージ一覧のテキストエリアを配列に設定する
+     * @param {HTMLElement} el
+     */
+    const chatMessages = (el) => {
+      if (el) {
+        chatMessageItems.value.push(el)
+      }
+    }
+
     return {
       channelName,
       isChannelPublic,
@@ -504,6 +537,8 @@ export default {
       isShowCenterEmojiPicker,
       selectMessageId,
       reactionEmoji,
+      updateAreaReaction,
+      chatMessages
     }
   }
 }
