@@ -35,10 +35,11 @@
               :showThreadIcon="true"
               :isThreadCount="message.isThreadCount"
               :reactions="message.reactions"
+              :mentions="message.mentions"
               @event:reactionMessage="reactionMessage"
               @event:threadMessage="threadMessage"
               @event:updateAreaReaction="updateAreaReaction(index)"
-              />            
+            />
           </div>
         </transition-group>
       </div>
@@ -226,6 +227,7 @@ export default {
       'content': '1番目のメッセージです！',
       'isThreadCount': 3,
       'reactions':[],
+      'mentions':[{id: 1, user_name: 'saburo'}, {id: 2, user_name: 'hanako'}]
     },
     {
       'id': 2,
@@ -454,6 +456,7 @@ export default {
           'postUserName': 'taro',
           'postTime': '12:00',
           'content': 'スレッドのメッセージです！',
+          'mentions':[{id: 3, user_name: 'hanako'}]
           }]
       }
 

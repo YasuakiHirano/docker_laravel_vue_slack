@@ -18,6 +18,11 @@
       </div>
       <div class="ml-2 w-full">
         <div><chat-user-name>{{ postUserName }}</chat-user-name><chat-user-date>{{ postTime }}</chat-user-date></div>
+        <div class="flex" v-if="(mentions != null || mentions != undefined) && mentions.length !== 0">
+          <div v-for="mention in mentions" :key="mention.id" class="flex mb-2">
+            <div class="mr-1 text-sm p-1 px-2 bg-green-500 rounded">@{{ mention.user_name }}</div>
+          </div>
+        </div>
         <div class="whitespace-pre-wrap break-all" v-show="!isEditMode">{{ content }}</div>
         <chat-input-area
           ref="chatInputArea"
@@ -46,7 +51,7 @@
 import { ref } from 'vue'
 
 export default({
-  props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content', 'isMyMessage', 'showThreadIcon', 'isThreadCount', 'messageOnly', 'reactions'],
+  props: ['channelId', 'messageId', 'date', 'imagePath', 'postUserName', 'postTime', 'content', 'isMyMessage', 'showThreadIcon', 'isThreadCount', 'messageOnly', 'reactions', 'mentions'],
   setup(props, context) {
     const isEditMode = ref(false)
     const chatInputArea = ref(null)
